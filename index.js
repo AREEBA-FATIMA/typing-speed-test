@@ -4,7 +4,8 @@ let score = document.querySelector('#score');
 let show_sentence = document.querySelector('#show-sent');
 let show_time = document.querySelector('#show-timer');
 
-let startTime, endTime, totalTimeTaken, sentence_to_write;
+let startTime, endTime, sentence_to_write;
+let intervalID, elapsedTime = 0;
 
 let sentences = [
     "The quick brown fox jumps over the lazy dog.",
@@ -52,7 +53,7 @@ const calculatetypingSpeed = (time_taken) => {
 
 const endTypingTest = () => {
     btn.innerText = "Start";
-    showTimer();
+    clearInterval(intervalID);
 
     let date = new Date();
     endTime = date.getTime();
@@ -64,19 +65,12 @@ const endTypingTest = () => {
     typing_ground.value = "";
 }
 
-let intervalID, elapsedTime = 0;
-
 const showTimer = () => {
-    if (btn.innerText === "Done") {
-        intervalID = setInterval(() => {
-            elapsedTime++;
-            show_time.innerHTML = elapsedTime;
-        }, 1000);
-    } else if (btn.innerText === "Start") {
-        elapsedTime= 0
-        clearInterval(intervalID);
-        show_time.innerHTML = "";
-    }
+    show_time.innerHTML = elapsedTime;
+    intervalID = setInterval(() => {
+        elapsedTime++;
+        show_time.innerHTML = elapsedTime;
+    }, 1000);
 }
 
 const startTyping = () => {
@@ -86,9 +80,11 @@ const startTyping = () => {
     let date = new Date();
     startTime = date.getTime();
 
-    btn.innerText = "Done";
-
+    elapsedTime = 0;
+    clearInterval(intervalID);
     showTimer();
+
+    btn.innerText = "Done";
 }
 
 btn.addEventListener('click', () => {
