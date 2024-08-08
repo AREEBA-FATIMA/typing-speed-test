@@ -73,6 +73,7 @@ const showTimer = () => {
             show_time.innerHTML = elapsedTime;
         }, 1000);
     } else if (btn.innerText === "Start") {
+        elapsedTime= 0
         clearInterval(intervalID);
         show_time.innerHTML = "";
     }
